@@ -1,0 +1,55 @@
+.navBarDark {
+  display: flex;
+  background-color: grey;
+  height: 10vh;
+  align-items: center;
+}
+
+.navBarLight {
+  display: flex;
+  background-color: white;
+  height: 10vh;
+  align-items: center;
+}
+
+.navBarComponentDark {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.navBarComponentLight {
+  text-decoration: none;
+  color: grey;
+  font-weight: bold;
+}
+
+.mainBackgroundDark {
+  background-color: #222;
+  color: white;
+  padding-bottom: 7vh;
+  min-height: 100vh;
+}
+
+.mainBackgroundLight {
+  background-color: grey;
+  color: black;
+  padding-bottom: 7vh;
+  min-height: 100vh;
+}
+
+.footerBackGroundDark {
+  font-weight: bold;
+  background-color: #222;
+  color: white;
+  bottom: 0;
+  height: 7vh;
+}
+
+.footerBackGroundLight {
+  font-weight: bold;
+  background-color: grey;
+  color: black;
+  bottom: 0;
+  height: 7vh;
+}
