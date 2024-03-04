@@ -13,7 +13,6 @@ export default function DeleteButton(props: any) {
   const session = getSession();
   const [isHovered, setIsHovered] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-
   useEffect(() => {
     session.then((res) => {
       if (res?.user?.email) {

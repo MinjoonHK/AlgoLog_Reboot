@@ -12,7 +12,10 @@ async function Detail(props: any) {
     .findOne({ _id: new ObjectId(props.params.id) });
   return (
     <div style={{ marginLeft: "20%", marginRight: "20%", paddingTop: "5%" }}>
-      <DeleteButton userEmail={result.authorEmail} />
+      <DeleteButton
+        userEmail={result.authorEmail}
+        postId={result._id.toString()}
+      />
       <Card
         style={{
           border: "transparent",
