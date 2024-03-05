@@ -3,7 +3,6 @@
 import {
   Button,
   Card,
-  ConfigProvider,
   Dropdown,
   MenuProps,
   Pagination,

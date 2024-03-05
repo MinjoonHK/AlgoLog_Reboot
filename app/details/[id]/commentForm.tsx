@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, Input } from "antd";
+import { Button, Divider, Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { getSession } from "next-auth/react";
@@ -79,8 +79,12 @@ export default function CommentForm(props: any) {
       </Form>
       <div>
         {comments.map((comment, index) => (
-          <div key={index}>
-            <div>{comment.author}</div>
+          <div
+            style={{ backgroundColor: "white", borderRadius: "15px" }}
+            key={index}
+          >
+            <div style={{ alignItems: "center" }}>{comment.author}</div>
+            <Divider style={{ border: "0.5px solid black" }} />
             <div style={{ backgroundColor: "white" }}>
               <p>{comment.comment}</p>
             </div>
