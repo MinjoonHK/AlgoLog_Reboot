@@ -38,7 +38,7 @@ async function Detail(props: any) {
       </Card>
       <Divider style={{ border: "1px solid rgb(45,45,45)" }} />
       <div>
-        <CommentForm />
+        <CommentForm postId={result._id.toString()} />
       </div>
     </div>
   );

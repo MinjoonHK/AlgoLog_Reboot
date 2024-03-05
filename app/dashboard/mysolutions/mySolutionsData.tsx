@@ -1,6 +1,15 @@
 "use client";
 
-import { Button, Card, Dropdown, MenuProps, Space, Spin } from "antd";
+import {
+  Button,
+  Card,
+  ConfigProvider,
+  Dropdown,
+  MenuProps,
+  Pagination,
+  Space,
+  Spin,
+} from "antd";
 import {
   DownOutlined,
   EditOutlined,
@@ -15,6 +24,7 @@ import Meta from "antd/es/card/Meta";
 import { useRouter } from "next/navigation";
 import { getSession, useSession } from "next-auth/react";
 import Swal from "sweetalert2";
+import dropDwonItems from "./dropDownItems";
 
 interface dataType {
   _id: string;
@@ -24,29 +34,6 @@ interface dataType {
   author: string;
   CreatedAt: Date;
 }
-
-const items = [
-  {
-    label: "백준",
-    key: "1",
-  },
-  {
-    label: "프로그래머스",
-    key: "2",
-  },
-  {
-    label: "LeetCode",
-    key: "3",
-  },
-  {
-    label: "SWEA",
-    key: "4",
-  },
-  {
-    label: "SOFTEER",
-    key: "5",
-  },
-];
 
 const MySolutionsData = () => {
   const session = getSession();
@@ -71,6 +58,8 @@ const MySolutionsData = () => {
   const [heartClicked, setHeartClicked] = useState(false);
   const [dropdownSelected, setDropdownSelected] = useState("출처 분류");
   const [filteredData, setFilteredData] = useState<dataType[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 9;
 
   const fetchData = async () => {
     axios.get("/api/posts").then((response) => {
@@ -86,7 +75,7 @@ const MySolutionsData = () => {
   }, []);
 
   const handleMenuClick: MenuProps["onClick"] = (e) => {
-    const selectedItem = items[Number(e.key) - 1];
+    const selectedItem = dropDwonItems[Number(e.key) - 1];
     if (selectedItem) {
       setDropdownSelected(selectedItem.label);
     }
@@ -97,8 +86,12 @@ const MySolutionsData = () => {
   };
 
   const menuProps = {
-    items,
+    dropDwonItems,
     onClick: handleMenuClick,
+  };
+
+  const handlePage = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -144,75 +137,93 @@ const MySolutionsData = () => {
               gridTemplateColumns: "1fr 1fr 1fr",
             }}
           >
-            {filteredData.map((item, idx) => {
-              return (
-                <div key={idx} style={{ margin: "25px", textAlign: "center" }}>
-                  <Card
-                    loading={loading}
-                    style={{ width: 310 }}
-                    cover={
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        href={`/details/${item._id}`}
-                      >
-                        <img
-                          style={{
-                            width: 310,
-                            height: 160,
-                            cursor: "pointer",
-                          }}
-                          alt="example"
-                          src={item.image}
-                        />
-                      </Link>
-                    }
+            {filteredData
+              .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+              .map((item, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    style={{ margin: "25px", textAlign: "center" }}
                   >
-                    <Meta
-                      style={{ height: 80, textAlign: "left" }}
-                      title={item.title}
-                      description={
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
+                    <Card
+                      loading={loading}
+                      style={{ width: 310 }}
+                      cover={
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          href={`/details/${item._id}`}
                         >
-                          <span>{item.author}</span>
-                          <span style={{ fontSize: "23px" }}>
-                            {heartClicked ? (
-                              <span>
-                                <HeartFilled
-                                  style={{ color: "red" }}
-                                  onClick={() => {
-                                    setHeartClicked(false);
-                                  }}
-                                />
-                                <MessageOutlined
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </span>
-                            ) : (
-                              <span>
-                                <HeartOutlined
-                                  onClick={() => {
-                                    setHeartClicked(true);
-                                  }}
-                                />
-                                <MessageOutlined
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </span>
-                            )}
-                          </span>
-                        </div>
+                          <img
+                            style={{
+                              width: 310,
+                              height: 160,
+                              cursor: "pointer",
+                            }}
+                            alt="example"
+                            src={item.image}
+                          />
+                        </Link>
                       }
-                    />
-                  </Card>
-                </div>
-              );
-            })}
+                    >
+                      <Meta
+                        style={{ height: 80, textAlign: "left" }}
+                        title={item.title}
+                        description={
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>{item.author}</span>
+                            <span style={{ fontSize: "23px" }}>
+                              {heartClicked ? (
+                                <span>
+                                  <HeartFilled
+                                    style={{ color: "red" }}
+                                    onClick={() => {
+                                      setHeartClicked(false);
+                                    }}
+                                  />
+                                  <MessageOutlined
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </span>
+                              ) : (
+                                <span>
+                                  <HeartOutlined
+                                    onClick={() => {
+                                      setHeartClicked(true);
+                                    }}
+                                  />
+                                  <MessageOutlined
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        }
+                      />
+                    </Card>
+                  </div>
+                );
+              })}
           </div>
         )}
+        <div
+          style={{
+            display: filteredData.length == 0 ? "none" : "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination
+            total={filteredData.length}
+            current={currentPage}
+            pageSize={pageSize}
+            onChange={handlePage}
+          />
+        </div>
       </div>
     </div>
   );

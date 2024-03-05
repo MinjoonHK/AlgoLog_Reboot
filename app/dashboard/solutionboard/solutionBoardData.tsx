@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Spin } from "antd";
+import { Card, Pagination, Spin } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Search, { SearchProps } from "antd/es/input/Search";
@@ -22,6 +22,8 @@ const SolutionBoardData = () => {
   const [loading, setLoading] = useState(true);
   const [searchedItems, setSearchedItems] = useState<dataType[]>([]);
   const [heartClicked, setHeartClicked] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 9;
 
   const fetchData = async () => {
     axios.get("/api/publicpost").then((response) => {
@@ -45,6 +47,10 @@ const SolutionBoardData = () => {
       });
       setSearchedItems(filteredData);
     }
+  };
+
+  const handlePage = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -77,75 +83,88 @@ const SolutionBoardData = () => {
               gridTemplateColumns: "1fr 1fr 1fr",
             }}
           >
-            {searchedItems.map((item, idx) => {
-              return (
-                <div key={idx} style={{ margin: "25px", textAlign: "center" }}>
-                  <Card
-                    loading={loading}
-                    style={{ width: 310 }}
-                    cover={
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        href={`/details/${item._id}`}
-                      >
-                        <img
-                          style={{
-                            width: 310,
-                            height: 160,
-                            cursor: "pointer",
-                          }}
-                          alt="example"
-                          src={item.image}
-                        />
-                      </Link>
-                    }
+            {searchedItems
+              .slice((currentPage - 1) * pageSize, currentPage * pageSize)
+              .map((item, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    style={{ margin: "25px", textAlign: "center" }}
                   >
-                    <Meta
-                      style={{ height: 80, textAlign: "left" }}
-                      title={item.title}
-                      description={
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
+                    <Card
+                      loading={loading}
+                      style={{ width: 310 }}
+                      cover={
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          href={`/details/${item._id}`}
                         >
-                          <span>{item.author}</span>
-                          <span style={{ fontSize: "23px" }}>
-                            {heartClicked ? (
-                              <span>
-                                <HeartFilled
-                                  style={{ color: "red" }}
-                                  onClick={() => {
-                                    setHeartClicked(false);
-                                  }}
-                                />
-                                <MessageOutlined
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </span>
-                            ) : (
-                              <span>
-                                <HeartOutlined
-                                  onClick={() => {
-                                    setHeartClicked(true);
-                                  }}
-                                />
-                                <MessageOutlined
-                                  style={{ marginLeft: "10px" }}
-                                />
-                              </span>
-                            )}
-                          </span>
-                        </div>
+                          <img
+                            style={{
+                              width: 310,
+                              height: 160,
+                              cursor: "pointer",
+                            }}
+                            alt="example"
+                            src={item.image}
+                          />
+                        </Link>
                       }
-                    />
-                  </Card>
-                </div>
-              );
-            })}
+                    >
+                      <Meta
+                        style={{ height: 80, textAlign: "left" }}
+                        title={item.title}
+                        description={
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>{item.author}</span>
+                            <span style={{ fontSize: "23px" }}>
+                              {heartClicked ? (
+                                <span>
+                                  <HeartFilled
+                                    style={{ color: "red" }}
+                                    onClick={() => {
+                                      setHeartClicked(false);
+                                    }}
+                                  />
+                                  <MessageOutlined
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </span>
+                              ) : (
+                                <span>
+                                  <HeartOutlined
+                                    onClick={() => {
+                                      setHeartClicked(true);
+                                    }}
+                                  />
+                                  <MessageOutlined
+                                    style={{ marginLeft: "10px" }}
+                                  />
+                                </span>
+                              )}
+                            </span>
+                          </div>
+                        }
+                      />
+                    </Card>
+                  </div>
+                );
+              })}
           </div>
         )}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Pagination
+            total={searchedItems.length}
+            current={currentPage}
+            pageSize={pageSize}
+            onChange={handlePage}
+          />
+        </div>
       </div>
     </div>
   );
