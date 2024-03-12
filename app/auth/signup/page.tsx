@@ -3,6 +3,8 @@
 import { Button, Card, Form, Input } from "antd";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const inputStyle = {
   width: "364.4px",
@@ -10,6 +12,7 @@ const inputStyle = {
 
 function SignUp() {
   const [form] = Form.useForm();
+  const router = useRouter();
   const { data: session, status } = useSession();
   if (status === "authenticated" && session.user != undefined) {
     console.log(session, status);
@@ -22,11 +25,25 @@ function SignUp() {
         password,
         username,
       });
-      if (res.data.message === "registration successful") {
-        console.log("resgistration successful");
+      if (res.data.code === "4000") {
+        Swal.fire({
+          icon: "success",
+          title: "회원가입이 완료되었습니다!",
+          showConfirmButton: true,
+          timer: 1500,
+        }).then(() => {
+          router.push("/auth/login");
+        });
       }
     } catch (err) {
-      console.log(err);
+      if (err.response.data.code === "4001") {
+        Swal.fire({
+          icon: "error",
+          title: "이미 가입한 이메일입니다!",
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      }
     }
   };
 

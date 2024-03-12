@@ -15,6 +15,7 @@ async function Detail(props: any) {
       <DeleteButton
         userEmail={result.authorEmail}
         postId={result._id.toString()}
+        userRole={result.role}
       />
       <Card
         style={{

@@ -20,10 +20,14 @@ export default function DeleteButton(props: any) {
       }
     });
   }, []);
+
   return (
     <div
       style={{
-        display: props.userEmail == userEmail ? "flex" : "none",
+        display:
+          props.userEmail == userEmail || userEmail == "admin@gmail.com"
+            ? "flex"
+            : "none",
         justifyContent: "right",
         marginBottom: "2%",
       }}

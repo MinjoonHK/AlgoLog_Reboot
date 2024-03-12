@@ -40,7 +40,6 @@ export default function CommentForm(props: any) {
       }
     });
   }, []);
-  console.log(comments);
   const onFinish = async ({ comment }) => {
     try {
       const res = await axios.post("/api/comment", {

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 interface UserInfo {
   name: string;
   email: string;
+  createdAt?: string;
   image?: string;
 }
 
@@ -22,7 +23,6 @@ const nullInfo = {
 export default function MyInfoData() {
   const session = getSession();
   const router = useRouter();
-
   session.then((res) => {
     if (res == null) {
       Swal.fire({
@@ -46,21 +46,36 @@ export default function MyInfoData() {
   useEffect(() => {
     fetchUserInfo();
   }, []);
-
-  console.log(userInfo);
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        margin: "0 20%",
+        paddingTop: "5%",
       }}
     >
-      <Form>
-        <Form.Item>
-          <Input />
-        </Form.Item>
-      </Form>
+      <div
+        style={{
+          backgroundColor: "white",
+          borderRadius: "25px",
+          width: "50%",
+          padding: "3% 0",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Form style={{ width: "80%" }}>
+          <Form.Item label="이름">
+            <Input value={userInfo.name} disabled />
+          </Form.Item>
+          <Form.Item label="가입한날">
+            <Input value={userInfo.createdAt?.slice(0, 10)} disabled />
+          </Form.Item>
+          <Form.Item label="이메일">
+            <Input value={userInfo.email} disabled />
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 }

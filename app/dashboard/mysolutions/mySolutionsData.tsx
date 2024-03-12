@@ -178,23 +178,23 @@ const MySolutionsData = () => {
                             <span style={{ fontSize: "23px" }}>
                               {heartClicked ? (
                                 <span>
-                                  <HeartFilled
+                                  {/* <HeartFilled
                                     style={{ color: "red" }}
                                     onClick={() => {
                                       setHeartClicked(false);
                                     }}
-                                  />
+                                  /> */}
                                   <MessageOutlined
                                     style={{ marginLeft: "10px" }}
                                   />
                                 </span>
                               ) : (
                                 <span>
-                                  <HeartOutlined
+                                  {/* <HeartOutlined
                                     onClick={() => {
                                       setHeartClicked(true);
                                     }}
-                                  />
+                                  /> */}
                                   <MessageOutlined
                                     style={{ marginLeft: "10px" }}
                                   />
