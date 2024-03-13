@@ -46,6 +46,7 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 ### 🏠URL
 
 <a href="https://algorithmlog.com">https://algorithmlog.com</a>
+현재 서버 정지 상태입니다
 
 ## 📌주요 기능
 
