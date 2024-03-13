@@ -44,14 +44,7 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 </details>
 
 <details>
-<summary>이미지#3</summary>
-  
-  ![algolo_mainpage](https://github.com/MinjoonHK/Management_system/assets/108560916/7ed95d6a-61b0-4af6-b694-9889a77ad4b7)
-  
-</details>
-
-<details>
-<summary>이미지#3</summary>
+<summary>이미지#4</summary>
   
   ![세부페이지1](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/af092e9e-97bb-4698-aaa8-0073502d0bb0)
   
