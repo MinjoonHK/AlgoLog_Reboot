@@ -17,21 +17,19 @@ interface dataType {
   CreatedAt: Date;
 }
 
-const SolutionBoardData = () => {
+const SolutionBoardData = (props) => {
   const [postItems, setPostItems] = useState<dataType[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchedItems, setSearchedItems] = useState<dataType[]>([]);
   const [heartClicked, setHeartClicked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
-
   const fetchData = async () => {
     axios.get("/api/publicpost").then((response) => {
       setPostItems(response.data);
       setSearchedItems(response.data);
     });
   };
-
   useEffect(() => {
     setLoading(true);
     fetchData();
@@ -122,17 +120,14 @@ const SolutionBoardData = () => {
                             }}
                           >
                             <span>{item.author}</span>
-                            <span style={{ fontSize: "23px" }}>
-                              {heartClicked ? (
+                            <span style={{ fontSize: "15px" }}>
+                              {/* {heartClicked ? (
                                 <span>
                                   <HeartFilled
                                     style={{ color: "red" }}
                                     onClick={() => {
                                       setHeartClicked(false);
                                     }}
-                                  />
-                                  <MessageOutlined
-                                    style={{ marginLeft: "10px" }}
                                   />
                                 </span>
                               ) : (
@@ -142,11 +137,16 @@ const SolutionBoardData = () => {
                                       setHeartClicked(true);
                                     }}
                                   />
-                                  <MessageOutlined
-                                    style={{ marginLeft: "10px" }}
-                                  />
                                 </span>
-                              )}
+                              )} */}
+                              <b>
+                                {
+                                  JSON.parse(props.comment).filter(
+                                    (value) => value.postId == item._id
+                                  ).length
+                                }{" "}
+                                개의 댓글
+                              </b>
                             </span>
                           </div>
                         }

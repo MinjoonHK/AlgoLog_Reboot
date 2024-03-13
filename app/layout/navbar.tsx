@@ -50,8 +50,9 @@ const NavBar = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
-            marginLeft: "9%",
+            marginRight: "10%",
+            width: "30%",
+            marginLeft: "20%",
           }}
         >
           <div>
@@ -78,7 +79,7 @@ const NavBar = () => {
               다른풀이 둘러보기
             </Link>
           </div>
-          <div>
+          {/* <div>
             <Link
               className={
                 mode != undefined && mode.value == "dark"
@@ -89,7 +90,7 @@ const NavBar = () => {
             >
               정보 공유 게시판
             </Link>
-          </div>
+          </div> */}
           <div>
             <Link
               className={

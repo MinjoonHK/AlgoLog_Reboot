@@ -34,7 +34,7 @@ interface dataType {
   CreatedAt: Date;
 }
 
-const MySolutionsData = () => {
+const MySolutionsData = (props) => {
   const session = getSession();
   const router = useRouter();
 
@@ -55,7 +55,6 @@ const MySolutionsData = () => {
   const [postItems, setPostItems] = useState<dataType[]>([]);
   const [loading, setLoading] = useState(true);
   const [heartClicked, setHeartClicked] = useState(false);
-  const [dropdownSelected, setDropdownSelected] = useState("출처 분류");
   const [filteredData, setFilteredData] = useState<dataType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
@@ -73,22 +72,6 @@ const MySolutionsData = () => {
     setLoading(false);
   }, []);
 
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
-    const selectedItem = dropDwonItems[Number(e.key) - 1];
-    if (selectedItem) {
-      setDropdownSelected(selectedItem.label);
-    }
-    const filteredData = postItems.filter((item) => {
-      return item.title.includes(dropdownSelected);
-    });
-    setFilteredData(filteredData);
-  };
-
-  const menuProps = {
-    dropDwonItems,
-    onClick: handleMenuClick,
-  };
-
   const handlePage = (page) => {
     setCurrentPage(page);
   };
@@ -105,15 +88,6 @@ const MySolutionsData = () => {
         >
           <div>
             <span>
-              <Dropdown menu={menuProps}>
-                <Button>
-                  <Space>
-                    {dropdownSelected}
-                    <DownOutlined />
-                  </Space>
-                </Button>
-              </Dropdown>
-
               <Button style={{ marginLeft: "20px" }}>
                 <Link href={"/write"}>
                   <EditOutlined /> 새 풀이
@@ -175,31 +149,31 @@ const MySolutionsData = () => {
                             }}
                           >
                             <span>{item.author}</span>
-                            <span style={{ fontSize: "23px" }}>
-                              {heartClicked ? (
+                            <span style={{ fontSize: "15px" }}>
+                              {/* {heartClicked ? (
                                 <span>
-                                  {/* <HeartFilled
+                                  <HeartFilled
                                     style={{ color: "red" }}
                                     onClick={() => {
                                       setHeartClicked(false);
                                     }}
-                                  /> */}
-                                  <MessageOutlined
-                                    style={{ marginLeft: "10px" }}
                                   />
                                 </span>
                               ) : (
                                 <span>
-                                  {/* <HeartOutlined
+                                  <HeartOutlined
                                     onClick={() => {
                                       setHeartClicked(true);
                                     }}
-                                  /> */}
-                                  <MessageOutlined
-                                    style={{ marginLeft: "10px" }}
                                   />
                                 </span>
-                              )}
+                              )} */}
+                              {
+                                JSON.parse(props.comment).filter(
+                                  (value) => value.postId == item._id
+                                ).length
+                              }
+                              개의 댓글
                             </span>
                           </div>
                         }

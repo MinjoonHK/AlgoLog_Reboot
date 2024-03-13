@@ -1,11 +1,13 @@
 "use client";
 
-import { Button, Divider, Form, Input } from "antd";
+import { Button, Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Avatar from "react-avatar";
+import { PlusSquareOutlined } from "@ant-design/icons";
 
 interface Comment {
   _id: string;
@@ -13,13 +15,13 @@ interface Comment {
   postId: string;
   author: string;
   authorEmail: string;
-  createdAt: Date;
-  deletedAt: Date | null;
+  createdAt: string;
+  deletedAt: string | null;
 }
 
 export default function CommentForm(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [comments, setCommnets] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const session = getSession();
 
   const fetchComments = async () => {
@@ -28,12 +30,16 @@ export default function CommentForm(props: any) {
         params: { postId: props.postId },
       })
       .then((res) => {
-        setCommnets(res.data);
+        setComments(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   useEffect(() => {
     fetchComments();
+
     session.then((res) => {
       if (res?.user?.email) {
         setIsLoggedIn(true);
@@ -78,14 +84,44 @@ export default function CommentForm(props: any) {
       </Form>
       <div>
         {comments.map((comment, index) => (
-          <div
-            style={{ backgroundColor: "white", borderRadius: "15px" }}
-            key={index}
-          >
-            <div style={{ alignItems: "center" }}>{comment.author}</div>
-            <Divider style={{ border: "0.5px solid black" }} />
-            <div style={{ backgroundColor: "white" }}>
-              <p>{comment.comment}</p>
+          <div>
+            <div
+              style={{
+                backgroundColor: "white",
+                borderRadius: "5px",
+                color: "black",
+              }}
+              key={index}
+            >
+              <div style={{ padding: "20px 20px" }}>
+                <div>
+                  <div>
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <Avatar
+                        name={comment.author}
+                        size="40"
+                        round={true}
+                        textSizeRatio={2}
+                        style={{ marginRight: "10px" }}
+                      />
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <span>{comment.author}</span>
+                        <span style={{ color: "gray" }}>
+                          {comment.createdAt.slice(0, 10)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ paddingTop: "3%" }}>
+                  <p>{comment.comment}</p>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: isLoggedIn ? "" : "none" }}>
+              <p>
+                <PlusSquareOutlined /> 답글 추가
+              </p>
             </div>
           </div>
         ))}
