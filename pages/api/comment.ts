@@ -24,17 +24,15 @@ export default async (req, res) => {
 
   if (req.method == "GET") {
     try {
-      if (session && session.user != undefined) {
-        const result = await db
-          .collection("comment")
-          .find({
-            postId: req.query.postId,
-            deletedAt: null,
-          })
-          .toArray();
-        if (result) {
-          return res.status(200).json(result);
-        }
+      const result = await db
+        .collection("comment")
+        .find({
+          postId: req.query.postId,
+          deletedAt: null,
+        })
+        .toArray();
+      if (result) {
+        return res.status(200).json(result);
       }
     } catch (err) {
       res.status(500).json({
