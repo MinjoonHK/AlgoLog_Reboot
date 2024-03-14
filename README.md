@@ -50,12 +50,12 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
   
 </details>
 
-
+<!--
 ### 🏠URL
 
 <a href="https://algorithmlog.com">https://algorithmlog.com</a>
 비용 문제로 인해 일시적인 서버 정지 상태입니다
-
+-->
 ## 📌주요 기능
 
 ### -배포
@@ -69,3 +69,15 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 #### 💻Code
 
 <a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%A3%BC%EC%9A%94%EA%B8%B0%EB%8A%A5-%E2%80%90-Http-%E2%80%90--Https-%EC%A0%84%ED%99%98">위키로 이동</a>
+
+### -Markdown 형식 포스팅 및 작성
+
+#### 💻Code
+
+<a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%A3%BC%EC%9A%94%EA%B8%B0%EB%8A%A5-%E2%80%90-MarkDown-%ED%98%95%EC%8B%9D-%ED%8F%AC%EC%8A%A4%ED%8C%85">위키로 이동</a>
+
+### -로그인 및 회원가입
+
+#### 💻Code
+
+<a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%A3%BC%EC%9A%94%EA%B8%B0%EB%8A%A5-%E2%80%90-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EB%B0%8F-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85">위키로 이동</a>
