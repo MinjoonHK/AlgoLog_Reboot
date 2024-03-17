@@ -86,8 +86,8 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 ## ❗ 오류 및 불편한점 개선
 
 <a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%98%A4%EB%A5%98-%E2%80%90-NextAuth-%EB%B0%B0%ED%8F%AC%EC%8B%9C-oAuth-%EC%98%A4%EB%A5%98">NextAuth 배포시 localhost:3000 리다이렉션 오류</a>
-<a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%98%A4%EB%A5%98-%E2%80%90-Elastic-Beanstalk-%EB%B0%B0%ED%8F%AC%ED%9B%84-Current-Side-Exception-%EC%97%90%EB%9F%AC">Elastic Beanstalk 배포후 client-side exception 오류</a>
 
+<a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%98%A4%EB%A5%98-%E2%80%90-Elastic-Beanstalk-%EB%B0%B0%ED%8F%AC%ED%9B%84-Current-Side-Exception-%EC%97%90%EB%9F%AC">Elastic Beanstalk 배포후 client-side exception 오류</a>
 
 <a href="https://github.com/MinjoonHK/AlgoLog_Reboot/wiki/AlgoLog-%EC%98%A4%EB%A5%98-%E2%80%90-Next.js-dev-%EC%84%9C%EB%B2%84-%EB%8A%90%EB%A6%BC-%EC%98%A4%EB%A5%98">Next.js dev 서버 느림 현상 해결</a>
 
