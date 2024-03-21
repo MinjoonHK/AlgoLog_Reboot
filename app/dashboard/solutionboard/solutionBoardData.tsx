@@ -17,12 +17,23 @@ interface dataType {
   CreatedAt: Date;
 }
 
+interface Comment {
+  _id: string;
+  comment: string;
+  postId: string;
+  author: string;
+  authorEmail: string;
+  createdAt: string;
+  deletedAt: string | null;
+}
+
 const SolutionBoardData = (props) => {
   const [postItems, setPostItems] = useState<dataType[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchedItems, setSearchedItems] = useState<dataType[]>([]);
   const [heartClicked, setHeartClicked] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [comment, setComment] = useState<Comment[]>([]);
   const pageSize = 9;
   const fetchData = async () => {
     axios.get("/api/publicpost").then((response) => {
@@ -30,12 +41,18 @@ const SolutionBoardData = (props) => {
       setSearchedItems(response.data);
     });
   };
+
+  const fetchComment = async () => {
+    axios.get("/api/commentall").then((response) => {
+      setComment(response.data);
+    });
+  };
   useEffect(() => {
     setLoading(true);
     fetchData();
+    fetchComment();
     setLoading(false);
   }, []);
-
   const onSearch: SearchProps["onSearch"] = (value, _e) => {
     if (value === "") {
       setSearchedItems(postItems);
@@ -141,12 +158,12 @@ const SolutionBoardData = (props) => {
                               )} */}
                               <b>
                                 {
-                                  JSON.parse(props.comment).filter(
-                                    (value) => value.postId == item._id
+                                  comment.filter(
+                                    (comment) => comment.postId === item._id
                                   ).length
-                                }{" "}
-                                개의 댓글
-                              </b>
+                                }
+                              </b>{" "}
+                              개의 댓글
                             </span>
                           </div>
                         }
