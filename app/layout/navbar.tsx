@@ -51,8 +51,8 @@ const NavBar = () => {
             display: "flex",
             justifyContent: "space-between",
             marginRight: "10%",
-            width: "30%",
-            marginLeft: "20%",
+            width: "40%",
+            marginLeft: "15%",
           }}
         >
           <div>
@@ -79,18 +79,18 @@ const NavBar = () => {
               다른풀이 둘러보기
             </Link>
           </div>
-          {/* <div>
+          <div>
             <Link
               className={
                 mode != undefined && mode.value == "dark"
                   ? "navBarComponentDark"
                   : "navBarComponentLight"
               }
-              href="/dashboard/noticeboard"
+              href="/dashboard/ai"
             >
-              정보 공유 게시판
+              AI 에게 물어보세요
             </Link>
-          </div> */}
+          </div>
           <div>
             <Link
               className={

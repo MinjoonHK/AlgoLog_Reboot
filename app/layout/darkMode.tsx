@@ -7,15 +7,13 @@ export default function DarkMode() {
   let router = useRouter();
   const [mode, setMode] = useState<string>("");
   useEffect(() => {
-    if (document.cookie) {
-      let cookieValue = ("; " + document.cookie)
-        .split(`; mode=`)
-        .pop()
-        ?.split(";")[0];
-      setMode(cookieValue || "");
-    } else {
-      setMode("light");
+    let cookieValue = ("; " + document.cookie)
+      .split(`; mode=`)
+      .pop()
+      ?.split(";")[0];
+    if (cookieValue == "") {
       document.cookie = "mode=light; max-age=" + 3600 * 24 * 400;
+      setMode("light");
     }
   }, []);
   return (

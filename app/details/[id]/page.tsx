@@ -34,7 +34,6 @@ async function Detail(props: any) {
           </div>
         }
       >
-        <div style={{ display: "flex", justifyContent: "space-between" }}></div>
         <MarkDown result={result.content} />
       </Card>
       <Divider style={{ border: "1px solid rgb(45,45,45)" }} />

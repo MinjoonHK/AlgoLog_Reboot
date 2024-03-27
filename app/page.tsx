@@ -2,6 +2,7 @@
 import { Provider } from "react-redux";
 import { store } from "../lib/store.ts";
 import SolutionBoardData from "./dashboard/solutionboard/solutionBoardData.tsx";
+import { useEffect } from "react";
 
 export default async function Home() {
   return (
