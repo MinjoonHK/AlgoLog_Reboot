@@ -23,32 +23,65 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 ### 🖼️ 프로젝트 이미지
 
 <details>
-<summary>이미지#1</summary>
+  <summary>이미지 펼치기</summary>
+
+  <details>
+<summary>로그인 페이지</summary>
   
   ![algolog_login](https://github.com/MinjoonHK/Management_system/assets/108560916/1f004ad3-1402-4667-b172-553104b1c79c)
   
 </details>
 
 <details>
-<summary>이미지#2</summary>
+<summary>회원가입 페이지</summary>
   
   ![algolog_signin](https://github.com/MinjoonHK/Management_system/assets/108560916/fba8f10d-04b7-48f5-aee0-a47a8f753adf)
   
 </details>
 
 <details>
-<summary>이미지#3</summary>
+<summary>대문 페이지</summary>
   
   ![algolo_mainpage](https://github.com/MinjoonHK/Management_system/assets/108560916/7ed95d6a-61b0-4af6-b694-9889a77ad4b7)
   
 </details>
 
+
 <details>
-<summary>이미지#4</summary>
+<summary>대문 페이지(다크모드)</summary>
+  
+ ![algolog_mainpagedark](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/da27a026-7090-4724-ad90-34dfcdcc9ca4)
+
+  
+</details>
+
+<details>
+<summary>상세 페이지</summary>
   
   ![세부페이지1](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/af092e9e-97bb-4698-aaa8-0073502d0bb0)
   
 </details>
+
+<details>
+<summary>상세 페이지</summary>
+  
+  ![algolog_ai](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/1b3b2786-6bad-483b-8f1a-5e3be34836d6)
+  
+</details>
+
+<details>
+<summary>글 작성 페이지</summary>
+  
+  ![algolog_글쓰기](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/6ec6cff4-a3a3-49b9-9a29-7a77c9a29321)
+  
+</details>
+  
+</details>
+
+
+
+
+
 
 <!--
 ### 🏠URL
