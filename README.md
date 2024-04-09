@@ -13,11 +13,11 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 ### ⚙️ 개발 환경
 
 <ul>
-  <li>React.js@18.2.0, Next.js@v14.1.0, TypeScript, Antd</li>
+  <li>React.js@18.2.0, Next.js@v14.1.0, TypeScript,Redux Toolkit Antd</li>
   <li>Env : Node.js@v18.17.0</li>
   <li>IDE : VScode</li>
   <li>DB : MongoDB </li>
-  <li>Deploy: AWS Elastic Beanstalk</li>
+  <li>Deploy: Vercel</li>
 </ul>
 
 ### 🖼️ 프로젝트 이미지
