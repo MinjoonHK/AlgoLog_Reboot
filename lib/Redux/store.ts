@@ -1,8 +1,13 @@
+"use client";
+
 import { configureStore } from "@reduxjs/toolkit";
+import counterReducer from "./Features/counter/counterSlice";
+import timerReducer from "./Features/timer/timerSlice";
 
 export const store = configureStore({
   reducer: {
-    // Add reducers here
+    counter: counterReducer,
+    timer: timerReducer,
   },
 });
 
