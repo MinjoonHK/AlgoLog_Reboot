@@ -138,24 +138,6 @@ const SolutionBoardData = (props) => {
                           >
                             <span>{item.author}</span>
                             <span style={{ fontSize: "15px" }}>
-                              {/* {heartClicked ? (
-                                <span>
-                                  <HeartFilled
-                                    style={{ color: "red" }}
-                                    onClick={() => {
-                                      setHeartClicked(false);
-                                    }}
-                                  />
-                                </span>
-                              ) : (
-                                <span>
-                                  <HeartOutlined
-                                    onClick={() => {
-                                      setHeartClicked(true);
-                                    }}
-                                  />
-                                </span>
-                              )} */}
                               <b>
                                 {
                                   comment.filter(
@@ -164,6 +146,28 @@ const SolutionBoardData = (props) => {
                                 }
                               </b>{" "}
                               개의 댓글
+                              <span
+                                style={{ marginLeft: "5px", fontSize: "18px" }}
+                              >
+                                {/* {heartClicked ? (
+                                  <span>
+                                    <HeartFilled
+                                      style={{ color: "red" }}
+                                      onClick={() => {
+                                        setHeartClicked(false);
+                                      }}
+                                    />
+                                  </span>
+                                ) : (
+                                  <span>
+                                    <HeartOutlined
+                                      onClick={() => {
+                                        setHeartClicked(true);
+                                      }}
+                                    />
+                                  </span>
+                                )} */}
+                              </span>
                             </span>
                           </div>
                         }

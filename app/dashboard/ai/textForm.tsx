@@ -15,6 +15,7 @@ function TextForm() {
       if (res.data.status === "success") {
         form.resetFields();
         setContent(res.data.response.choices[0].message.content);
+        console.log(res.data);
       } else {
         console.log("failed to send message");
       }

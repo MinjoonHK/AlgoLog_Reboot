@@ -37,8 +37,9 @@ export default function MarkDownPost(props) {
         components={markDownComponents}
         rehypePlugins={[rehypeRaw, rehypeKatex]}
         remarkPlugins={[remarkGfm, remarkMath]}
-        children={props.result}
-      ></MarkDown>
+      >
+        {props.result}
+      </MarkDown>
     </div>
   );
 }

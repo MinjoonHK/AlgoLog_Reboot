@@ -23,7 +23,7 @@ export default function CommentForm(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const session = getSession();
-
+  console.log(comments);
   const fetchComments = async () => {
     const result = await axios
       .get("/api/comment", {
@@ -46,6 +46,7 @@ export default function CommentForm(props: any) {
       }
     });
   }, []);
+
   const onFinish = async ({ comment }) => {
     try {
       const res = await axios.post("/api/comment", {
@@ -63,6 +64,26 @@ export default function CommentForm(props: any) {
       console.log(err);
     }
   };
+
+  const onFinishReply = async ({ reply }) => {
+    try {
+      const res = await axios.post("/api/commentReply", {
+        reply,
+        postId: props.postId,
+      });
+      if (res) {
+        Swal.fire({
+          icon: "success",
+          title: "성공적으로 댓글이 작성되었습니다!",
+        });
+        fetchComments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
     <div>
       <Form style={{ display: isLoggedIn ? "" : "none" }} onFinish={onFinish}>
@@ -119,7 +140,9 @@ export default function CommentForm(props: any) {
               </div>
             </div>
             <div style={{ display: isLoggedIn ? "" : "none" }}>
-              <p>
+              <p onClick={() => {
+                
+              }}>
                 <PlusSquareOutlined /> 답글 추가
               </p>
             </div>

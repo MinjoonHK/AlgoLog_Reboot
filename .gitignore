@@ -40,3 +40,5 @@ next-env.d.ts
 .env.prod
 .env.dev
 /lib/darkMode/
+
+./app/dashboard/noticeboard/
