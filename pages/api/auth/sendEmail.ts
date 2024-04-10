@@ -8,13 +8,13 @@ function generateCode(min, max) {
 
 let globalCode = 0;
 
-export default function emailVerification(req, res) {
+export default async function emailVerification(req, res) {
   if (req.method === "POST") {
     let code = generateCode(100000, 999999);
     globalCode = code;
     let sender = req.body.to;
     try {
-      let result: any = NodeMailer({ code: code, sender: sender });
+      let result: any = await NodeMailer({ code: code, sender: sender });
       if (result) {
         res.status(200).json({
           message: "성공적으로 인증번호를 보냈습니다",

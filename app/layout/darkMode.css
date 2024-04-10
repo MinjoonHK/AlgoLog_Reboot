@@ -15,12 +15,14 @@
 .navBarComponentDark {
   text-decoration: none;
   color: white;
+  white-space: nowrap;
   font-weight: bold;
 }
 
 .navBarComponentLight {
   text-decoration: none;
   color: grey;
+  white-space: nowrap;
   font-weight: bold;
 }
 
