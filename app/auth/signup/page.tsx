@@ -80,10 +80,10 @@ function SignUp() {
     }
   };
 
-  const confirmVarification = async () => {
+  const confirmVarification = async (code) => {
     const res = await axios.get("/api/auth/sendEmail", {
       params: {
-        code: form.getFieldValue("code"),
+        code,
       },
     });
     if (res.data.status == "success") {
@@ -207,7 +207,17 @@ function SignUp() {
                   }}
                   size="large"
                   onClick={() => {
-                    confirmVarification();
+                    let code = form.getFieldValue("code");
+                    if (code === undefined) {
+                      Swal.fire({
+                        icon: "error",
+                        title: "인증번호를 입력해주세요!",
+                        showConfirmButton: true,
+                        timer: 2000,
+                      });
+                    } else {
+                      confirmVarification(code);
+                    }
                   }}
                 >
                   {verified ? "인증되었습니다!" : "인증번호 확인하기"}

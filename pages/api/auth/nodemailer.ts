@@ -2,12 +2,13 @@ const nodemailer = require("nodemailer");
 import fs from "fs";
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "gmail",
   port: 465,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASSWORD,
   },
+  secure: true,
 });
 
 export default async function NodeMailer(props) {
@@ -15,7 +16,6 @@ export default async function NodeMailer(props) {
   Object.keys(props).forEach((key) => {
     html = html.replace(new RegExp(`{{${key}}}`, "g"), props[key]); //props를 {{}} 머스태시 문법으로 html 에 연결
   });
-  let code = props.code;
   let sender = props.sender;
   const info = await transporter.sendMail({
     from: process.env.EMAIL_FROM,
@@ -23,6 +23,9 @@ export default async function NodeMailer(props) {
     subject: "AlgorithmLog 인증메일 입니다",
     html: html,
   });
-
-  return true;
+  if (info) {
+    return true;
+  } else {
+    return false;
+  }
 }
