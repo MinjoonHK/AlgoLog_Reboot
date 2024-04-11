@@ -22,10 +22,7 @@ export default async function emailVerification(req, res) {
         });
       }
     } catch (error) {
-      console.log(error);
-      res
-        .status(400)
-        .json({ message: "인증번호 전송에 실패하였습니다", status: "error" });
+      res.status(400).json({ error, status: "error" });
     }
   }
 
