@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import fs from "fs";
+import path from "path";
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -14,6 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function NodeMailer(props) {
+  console.log(path.join(__dirname, "/template/emailTemplate.html"));
   let html = fs.readFileSync("./template/emailTemplate.html", "utf-8");
   Object.keys(props).forEach((key) => {
     html = html.replace(new RegExp(`{{${key}}}`, "g"), props[key]); //props를 {{}} 머스태시 문법으로 html 에 연결
