@@ -36,7 +36,21 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 <details>
 <summary>2. 회원가입 페이지</summary>
   
-  ![algolog_signin](https://github.com/MinjoonHK/Management_system/assets/108560916/fba8f10d-04b7-48f5-aee0-a47a8f753adf)
+  ![algolog_signin](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/eb80f300-373b-4f55-9b89-5b0c442f728b)
+  
+</details>
+
+<details>
+<summary>3. 회원가입 이메일 전송 이후</summary>
+  
+  ![algolog_signin](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/eb80f300-373b-4f55-9b89-5b0c442f728b)
+  
+</details>
+
+<details>
+<summary>3. 이메일 수신 화면</summary>
+  
+  ![algolog_emailVerification](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/d920d1b7-3c76-4199-8843-26b748c90f8b)
   
 </details>
 
