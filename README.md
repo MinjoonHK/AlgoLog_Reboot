@@ -43,7 +43,7 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 <details>
 <summary>3. 회원가입 이메일 전송 이후</summary>
   
-  ![algolog_signin](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/eb80f300-373b-4f55-9b89-5b0c442f728b)
+  ![algolog_signUpEmail](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/9ff7ddc0-ee6f-4ca1-80c5-8a2b1a6c3781)
   
 </details>
 
