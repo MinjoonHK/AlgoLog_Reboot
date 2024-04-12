@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export default async function NodeMailer(props) {
-  let html = fs.readFileSync("./public/template/emailTemplate.html", "utf-8");
+  let html = fs.readFileSync("/public/template/emailTemplate.html", "utf-8");
   Object.keys(props).forEach((key) => {
     html = html.replace(new RegExp(`{{${key}}}`, "g"), props[key]); //props를 {{}} 머스태시 문법으로 html 에 연결
   });
