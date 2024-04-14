@@ -64,7 +64,7 @@ const NavBar = () => {
               }
               href="/dashboard/mysolutions"
             >
-              내 풀이들 테스트입니다
+              내 풀이들
             </Link>
           </div>
           <div>

@@ -3,11 +3,15 @@
 import { Button, Checkbox, Form, Input, Card, Divider, Avatar } from "antd";
 import Link from "next/link";
 import SocialLogin from "./socailLogin";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { setUserId } from "@/lib/Redux/Features/userInfo/userInfoSlice";
 
 function Login() {
+  const dispatch = useDispatch();
+
   const router = useRouter();
   const onFinish = async ({ email, password }) => {
     const result = await signIn("credentials", {
@@ -15,6 +19,7 @@ function Login() {
       password: password,
       redirect: false,
     });
+
     if (result) {
       if (result.status == 401) {
         Swal.fire({
@@ -23,6 +28,10 @@ function Login() {
           text: "아이디 또는 비밀번호가 일치하지 않습니다.",
         });
       } else {
+        const session = getSession();
+        session.then((res) => {
+          dispatch(setUserId(res?.user?.email));
+        });
         router.push("/dashboard/solutionboard");
       }
     }

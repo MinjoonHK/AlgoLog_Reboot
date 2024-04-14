@@ -22,8 +22,9 @@ interface Comment {
 export default function CommentForm(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [userId, setUserId] = useState<string>("");
   const session = getSession();
-  console.log(comments);
+
   const fetchComments = async () => {
     const result = await axios
       .get("/api/comment", {
@@ -39,10 +40,10 @@ export default function CommentForm(props: any) {
 
   useEffect(() => {
     fetchComments();
-
     session.then((res) => {
       if (res?.user?.email) {
         setIsLoggedIn(true);
+        setUserId(res?.user?.email);
       }
     });
   }, []);
@@ -83,7 +84,6 @@ export default function CommentForm(props: any) {
     }
   };
 
-
   return (
     <div>
       <Form style={{ display: isLoggedIn ? "" : "none" }} onFinish={onFinish}>
@@ -105,19 +105,25 @@ export default function CommentForm(props: any) {
       </Form>
       <div>
         {comments.map((comment, index) => (
-          <div>
+          <div key={index}>
             <div
               style={{
                 backgroundColor: "white",
                 borderRadius: "5px",
                 color: "black",
+                marginBottom: isLoggedIn ? "0" : "3%",
               }}
-              key={index}
             >
               <div style={{ padding: "20px 20px" }}>
                 <div>
-                  <div>
-                    <div style={{ display: "flex", flexDirection: "row" }}>
+                  <div
+                    className="comment_top"
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div
+                      className="author_info"
+                      style={{ display: "flex", flexDirection: "row" }}
+                    >
                       <Avatar
                         name={comment.author}
                         size="40"
@@ -132,6 +138,24 @@ export default function CommentForm(props: any) {
                         </span>
                       </div>
                     </div>
+                    {userId === comment.authorEmail ||
+                    userId === "admin@gmail.com" ? (
+                      <div
+                        style={{
+                          width: "15%",
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          color: "rgb(128,128,128)",
+                        }}
+                      >
+                        <span style={{ marginRight: "7%", cursor: "pointer" }}>
+                          수정
+                        </span>
+                        <span style={{ cursor: "pointer" }}>삭제</span>
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
                 <div style={{ paddingTop: "3%" }}>
@@ -140,9 +164,7 @@ export default function CommentForm(props: any) {
               </div>
             </div>
             <div style={{ display: isLoggedIn ? "" : "none" }}>
-              <p onClick={() => {
-                
-              }}>
+              <p onClick={() => {}}>
                 <PlusSquareOutlined /> 답글 추가
               </p>
             </div>

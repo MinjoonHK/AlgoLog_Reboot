@@ -23,7 +23,6 @@ import Meta from "antd/es/card/Meta";
 import { useRouter } from "next/navigation";
 import { getSession, useSession } from "next-auth/react";
 import Swal from "sweetalert2";
-import dropDwonItems from "./dropDownItems";
 
 interface dataType {
   _id: string;
@@ -35,22 +34,7 @@ interface dataType {
 }
 
 const MySolutionsData = (props) => {
-  const session = getSession();
   const router = useRouter();
-
-  session.then((res) => {
-    if (res == null) {
-      Swal.fire({
-        icon: "error",
-        title: "로그인 필요",
-        text: "로그인이 필요한 서비스입니다.",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          router.push("/auth/login");
-        }
-      });
-    }
-  });
 
   const [postItems, setPostItems] = useState<dataType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,9 +51,24 @@ const MySolutionsData = (props) => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    fetchData();
-    setLoading(false);
+    const session = getSession();
+    session.then((res) => {
+      if (res == null) {
+        Swal.fire({
+          icon: "error",
+          title: "로그인 필요",
+          text: "로그인이 필요한 서비스입니다.",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            router.push("/auth/login");
+          }
+        });
+      } else {
+        setLoading(true);
+        fetchData();
+        setLoading(false);
+      }
+    });
   }, []);
 
   const handlePage = (page) => {
