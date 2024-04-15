@@ -1,15 +1,18 @@
 "use client";
 
+import { divider } from "@uiw/react-md-editor";
 import MarkDown from "./markDownForm";
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, Spin } from "antd";
 import axios from "axios";
 import { useState } from "react";
 
 function TextForm() {
   const [content, setContent] = useState("");
   const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onFinish = async ({ message }) => {
+    setIsLoading(true);
     try {
       let res = await axios.post("/api/gpt/gpt", { message });
       if (res.data.status === "success") {
@@ -22,6 +25,7 @@ function TextForm() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -38,26 +42,45 @@ function TextForm() {
             <Button
               htmlType="submit"
               style={{
-                width: "10%",
+                width: "20%",
                 backgroundColor: "rgb(135,97,225)",
                 color: "white",
                 border: "none",
+                textAlign: "center",
               }}
             >
-              Submit
+              AI 에게 물어보기
             </Button>
           </div>
         </Form.Item>
       </Form>
-
-      <Card
-        style={{
-          border: "transparent",
-          display: content == "" ? "none" : "block",
-        }}
-      >
-        <MarkDown result={content} />
-      </Card>
+      {isLoading ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "10%",
+            height: "50%",
+          }}
+        >
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Spin size="large" />
+            <div style={{ color: "white", marginTop: "5%" }}>
+              AI가 답변을 생성하고 있습니다...
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Card
+          style={{
+            border: "transparent",
+            display: content == "" ? "none" : "block",
+          }}
+        >
+          <MarkDown result={content} />
+        </Card>
+      )}
     </div>
   );
 }

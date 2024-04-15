@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Avatar from "react-avatar";
-import { PlusSquareOutlined } from "@ant-design/icons";
+import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 
 interface Comment {
   _id: string;
@@ -23,11 +23,13 @@ export default function CommentForm(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [userId, setUserId] = useState<string>("");
+  const [replyBoxVisible, setReplyBoxVisible] = useState<boolean[]>([]);
+  const [editBoxVisible, setEditBoxVisible] = useState<boolean[]>([]);
   const session = getSession();
 
   const fetchComments = async () => {
     const result = await axios
-      .get("/api/comment", {
+      .get("/api/comment/comment", {
         params: { postId: props.postId },
       })
       .then((res) => {
@@ -50,7 +52,7 @@ export default function CommentForm(props: any) {
 
   const onFinish = async ({ comment }) => {
     try {
-      const res = await axios.post("/api/comment", {
+      const res = await axios.post("/api/comment/comment", {
         comment,
         postId: props.postId,
       });
@@ -66,16 +68,31 @@ export default function CommentForm(props: any) {
     }
   };
 
-  const onFinishReply = async ({ reply }) => {
+  const toggleReplyBox = (index) => {
+    setReplyBoxVisible((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+
+  const toggleEditBox = (index) => {
+    setEditBoxVisible((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+
+  const deleteComment = async (commentId) => {
     try {
-      const res = await axios.post("/api/commentReply", {
-        reply,
-        postId: props.postId,
+      const res = await axios.delete("/api/comment/comment", {
+        data: { commentId },
       });
       if (res) {
         Swal.fire({
           icon: "success",
-          title: "성공적으로 댓글이 작성되었습니다!",
+          title: "성공적으로 댓글이 삭제되었습니다!",
         });
         fetchComments();
       }
@@ -148,10 +165,22 @@ export default function CommentForm(props: any) {
                           color: "rgb(128,128,128)",
                         }}
                       >
-                        <span style={{ marginRight: "7%", cursor: "pointer" }}>
-                          수정
+                        <span
+                          style={{ marginRight: "7%", cursor: "pointer" }}
+                          onClick={() => {
+                            toggleEditBox(index);
+                          }}
+                        >
+                          {editBoxVisible[index] ? "" : "수정"}
                         </span>
-                        <span style={{ cursor: "pointer" }}>삭제</span>
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            deleteComment(comment._id);
+                          }}
+                        >
+                          삭제
+                        </span>
                       </div>
                     ) : (
                       <div></div>
@@ -159,14 +188,119 @@ export default function CommentForm(props: any) {
                   </div>
                 </div>
                 <div style={{ paddingTop: "3%" }}>
-                  <p>{comment.comment}</p>
+                  {editBoxVisible[index] ? (
+                    <div>
+                      <Form>
+                        <Form.Item
+                          initialValue={comment.comment}
+                          name="comment"
+                        >
+                          <TextArea rows={3} />
+                        </Form.Item>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "right",
+                            marginTop: "2%",
+                          }}
+                        >
+                          <Button
+                            onClick={() => {
+                              toggleEditBox(index);
+                            }}
+                            style={{
+                              color: "rgb(128,128,128)",
+                              fontWeight: "bold",
+                              borderColor: "transparent",
+                              marginRight: "2%",
+                              backgroundColor: "transparent",
+                            }}
+                          >
+                            취소
+                          </Button>
+
+                          <Button
+                            style={{
+                              color: "white",
+                              backgroundColor: "#8761E1",
+                              fontWeight: "bold",
+                              width: "10%",
+                            }}
+                            htmlType="submit"
+                          >
+                            댓글 수정
+                          </Button>
+                        </div>
+                      </Form>
+                    </div>
+                  ) : (
+                    <p>{comment.comment}</p>
+                  )}
                 </div>
               </div>
             </div>
             <div style={{ display: isLoggedIn ? "" : "none" }}>
-              <p onClick={() => {}}>
-                <PlusSquareOutlined /> 답글 추가
+              <p
+                onClick={() => {
+                  toggleReplyBox(index);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                {replyBoxVisible[index] ? (
+                  <>
+                    <MinusSquareOutlined /> 숨기기
+                  </>
+                ) : (
+                  <>
+                    <PlusSquareOutlined /> 답글 추가
+                  </>
+                )}
               </p>
+            </div>
+            <div>
+              {replyBoxVisible[index] && (
+                <div
+                  style={{
+                    backgroundColor: "#8761E1",
+                    borderRadius: "5px",
+                    marginBottom: "5%",
+                  }}
+                >
+                  <div style={{ padding: "20px" }}>
+                    <Form onFinish={onFinish}>
+                      <Form.Item name="comment">
+                        <TextArea placeholder="댓글을 작성하세요" rows={6} />
+                      </Form.Item>
+                      <div style={{ display: "flex", justifyContent: "right" }}>
+                        <Button
+                          onClick={() => {
+                            toggleReplyBox(index);
+                          }}
+                          style={{
+                            color: "white",
+                            fontWeight: "bold",
+                            border: "2px solid white",
+                            marginRight: "2%",
+                            backgroundColor: "transparent",
+                          }}
+                        >
+                          취소
+                        </Button>
+
+                        <Button
+                          style={{
+                            color: "rgb(128,128,128)",
+                            fontWeight: "bold",
+                            width: "10%",
+                          }}
+                        >
+                          답글 작성
+                        </Button>
+                      </div>
+                    </Form>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}

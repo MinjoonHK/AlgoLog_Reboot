@@ -43,7 +43,7 @@ const SolutionBoardData = (props) => {
   };
 
   const fetchComment = async () => {
-    axios.get("/api/commentall").then((response) => {
+    axios.get("/api/comment/commentall").then((response) => {
       setComment(response.data);
     });
   };

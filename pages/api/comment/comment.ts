@@ -1,5 +1,5 @@
 import connectDB from "@/database/db";
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { ObjectId } from "mongodb";
 
@@ -73,7 +73,7 @@ export default async (req, res) => {
       const result = await db
         .collection("comment")
         .updateOne(
-          { _id: new ObjectId(req.body._id) },
+          { _id: new ObjectId(req.body.commentId) },
           { $set: { deletedAt: new Date() } }
         );
       if (result) {
