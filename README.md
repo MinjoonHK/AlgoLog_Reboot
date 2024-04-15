@@ -29,7 +29,7 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
   <details>
 <summary>1. 로그인 페이지</summary>
   
-  ![algolog_login](https://github.com/MinjoonHK/Management_system/assets/108560916/1f004ad3-1402-4667-b172-553104b1c79c)
+  ![algolog_login](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/2e29ea42-df4b-430f-9b15-a40b9be988b8)
   
 </details>
 
@@ -57,7 +57,7 @@ Next.js 와 MongoDB 를 이용한 토이 프로젝트입니다.
 <details>
 <summary>5. 대문 페이지</summary>
   
-  ![algolo_mainpage](https://github.com/MinjoonHK/Management_system/assets/108560916/7ed95d6a-61b0-4af6-b694-9889a77ad4b7)
+  ![algolo_mainpage](https://github.com/MinjoonHK/AlgoLog_Reboot/assets/108560916/de804acc-faac-4d3a-ba0c-f92e415d67c1)
   
 </details>
 
