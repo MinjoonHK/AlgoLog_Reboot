@@ -17,6 +17,7 @@ interface Comment {
   authorEmail: string;
   createdAt: string;
   deletedAt: string | null;
+  replies: Object[];
 }
 
 export default function CommentForm(props: any) {
@@ -25,7 +26,10 @@ export default function CommentForm(props: any) {
   const [userId, setUserId] = useState<string>("");
   const [replyBoxVisible, setReplyBoxVisible] = useState<boolean[]>([]);
   const [editBoxVisible, setEditBoxVisible] = useState<boolean[]>([]);
+  const [editedComment, setEditedComment] = useState<string>("");
   const session = getSession();
+  const [mainCommentForm] = Form.useForm();
+  const [replyForm] = Form.useForm();
 
   const fetchComments = async () => {
     const result = await axios
@@ -51,20 +55,28 @@ export default function CommentForm(props: any) {
   }, []);
 
   const onFinish = async ({ comment }) => {
-    try {
-      const res = await axios.post("/api/comment/comment", {
-        comment,
-        postId: props.postId,
+    console.log(mainCommentForm.getFieldValue("comment"));
+    if (mainCommentForm.getFieldValue("comment") === undefined) {
+      Swal.fire({
+        icon: "error",
+        title: "댓글을 입력해주세요!",
       });
-      if (res) {
-        Swal.fire({
-          icon: "success",
-          title: "성공적으로 댓글이 작성되었습니다!",
+    } else {
+      try {
+        const res = await axios.post("/api/comment/comment", {
+          comment,
+          postId: props.postId,
         });
-        fetchComments();
+        if (res) {
+          Swal.fire({
+            icon: "success",
+            title: "성공적으로 댓글이 작성되었습니다!",
+          });
+          fetchComments();
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -101,9 +113,60 @@ export default function CommentForm(props: any) {
     }
   };
 
+  const editComment = async (commentId, editedComment) => {
+    try {
+      const res = await axios.put("/api/comment/comment", {
+        commentId,
+        editedComment,
+      });
+      if (res.data.status === "success") {
+        Swal.fire({
+          icon: "success",
+          title: "성공적으로 댓글이 수정되었습니다!",
+        });
+        await fetchComments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleChangeEdit = (e) => {
+    setEditedComment(e.target.value);
+  };
+
+  const submitReply = async (commentId, newReply) => {
+    if (newReply === undefined) {
+      Swal.fire({
+        icon: "error",
+        title: "댓글을 입력해주세요!",
+      });
+      return;
+    }
+    try {
+      const res = await axios.post("/api/comment/commentReply", {
+        commentId,
+        newReply,
+      });
+      if (res) {
+        Swal.fire({
+          icon: "success",
+          title: "성공적으로 댓글이 작성되었습니다!",
+        });
+        fetchComments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
-      <Form style={{ display: isLoggedIn ? "" : "none" }} onFinish={onFinish}>
+      <Form
+        form={mainCommentForm}
+        style={{ display: isLoggedIn ? "" : "none" }}
+        onFinish={onFinish}
+      >
         <Form.Item name="comment">
           <TextArea placeholder="댓글을 작성하세요" rows={6} />
         </Form.Item>
@@ -190,12 +253,18 @@ export default function CommentForm(props: any) {
                 <div style={{ paddingTop: "3%" }}>
                   {editBoxVisible[index] ? (
                     <div>
-                      <Form>
+                      <Form
+                        onFinish={() => editComment(comment._id, editedComment)}
+                      >
                         <Form.Item
                           initialValue={comment.comment}
-                          name="comment"
+                          name="editedComment"
                         >
-                          <TextArea rows={3} />
+                          <TextArea
+                            rows={3}
+                            value={editedComment}
+                            onChange={handleChangeEdit}
+                          />
                         </Form.Item>
                         <div
                           style={{
@@ -216,7 +285,7 @@ export default function CommentForm(props: any) {
                               backgroundColor: "transparent",
                             }}
                           >
-                            취소
+                            닫기
                           </Button>
 
                           <Button
@@ -252,7 +321,15 @@ export default function CommentForm(props: any) {
                   </>
                 ) : (
                   <>
-                    <PlusSquareOutlined /> 답글 추가
+                    {comment.replies.length == 0 ? (
+                      <>
+                        <PlusSquareOutlined /> 답글 추가
+                      </>
+                    ) : (
+                      <>
+                        <PlusSquareOutlined /> {comment.replies.length}개의 답글
+                      </>
+                    )}
                   </>
                 )}
               </p>
@@ -267,8 +344,16 @@ export default function CommentForm(props: any) {
                   }}
                 >
                   <div style={{ padding: "20px" }}>
-                    <Form onFinish={onFinish}>
-                      <Form.Item name="comment">
+                    <Form
+                      form={replyForm}
+                      onFinish={() =>
+                        submitReply(
+                          comment._id,
+                          replyForm.getFieldValue("reply")
+                        )
+                      }
+                    >
+                      <Form.Item name="reply">
                         <TextArea placeholder="댓글을 작성하세요" rows={6} />
                       </Form.Item>
                       <div style={{ display: "flex", justifyContent: "right" }}>
@@ -293,6 +378,7 @@ export default function CommentForm(props: any) {
                             fontWeight: "bold",
                             width: "10%",
                           }}
+                          htmlType="submit"
                         >
                           답글 작성
                         </Button>

@@ -50,6 +50,7 @@ export default async (req, res) => {
       authorEmail: userEmail,
       createdAt: new Date(),
       deletedAt: null,
+      replies: [],
     };
     try {
       const result = await db.collection("comment").insertOne(insertObject);
@@ -87,6 +88,29 @@ export default async (req, res) => {
         status: "fail",
         error: "Internal Server Error",
         message: "DB에서 정보를 삭제하는데 실패하였습니다",
+      });
+    }
+  }
+
+  if (req.method === "PUT") {
+    try {
+      const result = await db
+        .collection("comment")
+        .updateOne(
+          { _id: new ObjectId(req.body.commentId) },
+          { $set: { comment: req.body.editedComment } }
+        );
+      if (result) {
+        return res.status(200).json({
+          message: "DB에서 COMMENT 정보를 수정하는데 성공하였습니다",
+          status: "success",
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        status: "fail",
+        error: "Internal Server Error",
+        message: "DB에서 정보를 수정하는데 실패하였습니다",
       });
     }
   }
